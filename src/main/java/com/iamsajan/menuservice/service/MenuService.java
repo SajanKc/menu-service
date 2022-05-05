@@ -12,7 +12,14 @@
  */
 package com.iamsajan.menuservice.service;
 
+import java.util.ArrayList;
+import java.util.List;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import com.iamsajan.menuservice.dto.MenuResponseDto;
+import com.iamsajan.menuservice.dto.MenuResponseListDto;
+import com.iamsajan.menuservice.entity.Menu;
+import com.iamsajan.menuservice.repository.MenuRepository;
 
 /**
  * @author Sajan K.C.
@@ -21,5 +28,46 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class MenuService {
+
+  @Autowired
+  private MenuRepository menuRepository;
+
+  /**
+   * @param menu
+   * @return
+   * @author Sajan K.C.
+   * @since V1.0.0, Modified In: @version, By @author
+   */
+  private MenuResponseDto getMenuResponseDto(Menu menu) {
+    MenuResponseDto response = new MenuResponseDto();
+
+    response.setId(menu.getId());
+    response.setTitle(menu.getTitle());
+    response.setLink(menu.getLink());
+    return response;
+  }
+
+  /**
+   * @return MenuResponseListDto
+   * @author Sajan K.C.
+   * @since V1.0.0, Modified In: @version, By @author
+   */
+  public MenuResponseListDto getMenus() {
+    List<MenuResponseDto> menuResponseList = new ArrayList<>();
+
+    List<Menu> menus = menuRepository.findAll();
+
+    for (Menu menu : menus) {
+      menuResponseList.add(getMenuResponseDto(menu));
+    }
+
+    MenuResponseListDto response = new MenuResponseListDto();
+    response.setMenus(menuResponseList);
+    response.setTotal((long) menuResponseList.size());
+
+    return response;
+  }
+
+
 
 }
