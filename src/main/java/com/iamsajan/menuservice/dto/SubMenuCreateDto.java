@@ -12,20 +12,19 @@
  */
 package com.iamsajan.menuservice.dto;
 
-import java.io.Serializable;
-import lombok.Data;
+import java.util.List;
+import lombok.Getter;
+import lombok.Setter;
 
 /**
  * @author Sajan K.C.
  * @version V1.0.0
  * @since V1.0.0, May 5, 2022
  */
-@Data
-public class MenuCreateDto implements Serializable {
+@Getter
+@Setter
+public class SubMenuCreateDto {
 
-  private static final long serialVersionUID = 1L;
-  
-  private String title;
-  private String link;
-  
+  private List<SubMenuDto> subMenus;
+
 }

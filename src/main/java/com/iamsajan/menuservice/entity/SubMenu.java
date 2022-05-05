@@ -12,19 +12,18 @@
  */
 package com.iamsajan.menuservice.entity;
 
-import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 /**
- * 
  * @author Sajan K.C.
  * @version V1.0.0
  * @since V1.0.0, May 5, 2022
@@ -32,7 +31,7 @@ import lombok.NoArgsConstructor;
 @Data
 @Entity
 @NoArgsConstructor
-public class Menu {
+public class SubMenu {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
@@ -41,8 +40,8 @@ public class Menu {
   @Column(nullable = false)
   private String link;
   
-  @OneToMany(mappedBy = "menu")
-  @JsonBackReference
-  private List<SubMenu> subMenus;
+  @ManyToOne(fetch = FetchType.EAGER)
+  @JoinColumn(name = "subMenu_id")
+  private Menu menu;
 
 }

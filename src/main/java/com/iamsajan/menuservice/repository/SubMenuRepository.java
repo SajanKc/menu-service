@@ -10,22 +10,25 @@
  * strictly forbidden unless prior written permission is obtained from Aadim Innovation.
  * 
  */
-package com.iamsajan.menuservice.dto;
+package com.iamsajan.menuservice.repository;
 
-import java.io.Serializable;
-import lombok.Data;
+import java.util.List;
+import org.springframework.data.jpa.repository.JpaRepository;
+import com.iamsajan.menuservice.entity.SubMenu;
 
 /**
  * @author Sajan K.C.
  * @version V1.0.0
  * @since V1.0.0, May 5, 2022
  */
-@Data
-public class MenuCreateDto implements Serializable {
+public interface SubMenuRepository extends JpaRepository<SubMenu, Long> {
 
-  private static final long serialVersionUID = 1L;
-  
-  private String title;
-  private String link;
-  
+  /**
+   * @param id
+   * @return
+   * @author Sajan K.C.
+   * @since V1.0.0, Modified In: @version, By @author
+   */
+  List<SubMenu> findByMenuId(Long id);
+
 }

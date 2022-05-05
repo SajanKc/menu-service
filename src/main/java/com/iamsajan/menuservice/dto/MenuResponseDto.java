@@ -12,6 +12,7 @@
  */
 package com.iamsajan.menuservice.dto;
 
+import java.util.List;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -26,4 +27,5 @@ public class MenuResponseDto {
   private Long id;
   private String title;
   private String link;
+  private List<SubMenuDto> subMenus;
 }

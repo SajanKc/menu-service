@@ -22,8 +22,12 @@ import com.iamsajan.menuservice.dto.MenuCreateDto;
 import com.iamsajan.menuservice.dto.MenuResponseDto;
 import com.iamsajan.menuservice.dto.MenuResponseListDto;
 import com.iamsajan.menuservice.dto.MenuUpdateDto;
+import com.iamsajan.menuservice.dto.SubMenuCreateDto;
+import com.iamsajan.menuservice.dto.SubMenuDto;
 import com.iamsajan.menuservice.entity.Menu;
+import com.iamsajan.menuservice.entity.SubMenu;
 import com.iamsajan.menuservice.repository.MenuRepository;
+import com.iamsajan.menuservice.repository.SubMenuRepository;
 
 /**
  * @author Sajan K.C.
@@ -35,6 +39,9 @@ public class MenuService {
 
   @Autowired
   private MenuRepository menuRepository;
+
+  @Autowired
+  private SubMenuRepository subMenuRepository;
 
   /**
    * @param menu
@@ -48,6 +55,18 @@ public class MenuService {
     response.setId(menu.getId());
     response.setTitle(menu.getTitle());
     response.setLink(menu.getLink());
+
+    List<SubMenu> subMenus = subMenuRepository.findByMenuId(menu.getId());
+
+    List<SubMenuDto> subMenuDtoList = new ArrayList<>();
+
+    for (SubMenu subMenu : subMenus) {
+      SubMenuDto subMenuDto = new SubMenuDto();
+      subMenuDto.setTitle(subMenu.getTitle());
+      subMenuDto.setLink(subMenu.getLink());
+      subMenuDtoList.add(subMenuDto);
+    }
+    response.setSubMenus(subMenuDtoList);
     return response;
   }
 
@@ -129,6 +148,32 @@ public class MenuService {
   @Transactional
   public void deleteMenus(List<Long> menuIds) {
     menuRepository.deleteByIdIn(menuIds);
+  }
+
+  /**
+   * @param id
+   * @param subMenuCreateDto
+   * @return MenuResponseDto
+   * @author Sajan K.C.
+   * @since V1.0.0, Modified In: @version, By @author
+   */
+  public MenuResponseDto addSubMenus(Long id, SubMenuCreateDto subMenuCreateDto) {
+    Optional<Menu> optionalMenu = menuRepository.findById(id);
+    if (optionalMenu.isPresent()) {
+      Menu menu = optionalMenu.get();
+      for (int i = 0; i < subMenuCreateDto.getSubMenus().size(); i++) {
+        SubMenu subMenu = new SubMenu();
+        SubMenuDto subMenuDto = subMenuCreateDto.getSubMenus().get(i);
+        subMenu.setTitle(subMenuDto.getTitle());
+        subMenu.setLink(subMenuDto.getLink());
+        subMenu.setMenu(menu);
+
+        subMenuRepository.save(subMenu);
+      }
+      return getMenuResponseDto(menu);
+    }
+
+    return null;
   }
 
 }

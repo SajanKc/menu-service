@@ -28,6 +28,7 @@ import com.iamsajan.menuservice.dto.MenuCreateDto;
 import com.iamsajan.menuservice.dto.MenuResponseDto;
 import com.iamsajan.menuservice.dto.MenuResponseListDto;
 import com.iamsajan.menuservice.dto.MenuUpdateDto;
+import com.iamsajan.menuservice.dto.SubMenuCreateDto;
 import com.iamsajan.menuservice.service.MenuService;
 
 /**
@@ -72,6 +73,15 @@ public class MenuController {
   @ResponseStatus(code = HttpStatus.NO_CONTENT)
   public void deleteMenus(@RequestBody List<Long> menuIds) {
     menuService.deleteMenus(menuIds);
+  }
+
+  // SubMenu Controller
+
+  @PostMapping("/{id}/sub-menus")
+  @ResponseStatus(code = HttpStatus.CREATED)
+  public MenuResponseDto addSubMenus(@PathVariable Long id,
+      @RequestBody SubMenuCreateDto subMenuCreateDto) {
+    return menuService.addSubMenus(id, subMenuCreateDto);
   }
 
 }
