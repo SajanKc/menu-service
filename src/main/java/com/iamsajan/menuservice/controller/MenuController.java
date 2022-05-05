@@ -14,6 +14,7 @@ package com.iamsajan.menuservice.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -58,6 +59,12 @@ public class MenuController {
   public MenuResponseDto updateMenus(@PathVariable Long id,
       @RequestBody MenuUpdateDto menuUpdateDto) {
     return menuService.updateMenu(id, menuUpdateDto);
+  }
+
+  @DeleteMapping("/{id}")
+  @ResponseStatus(code = HttpStatus.NO_CONTENT)
+  public void deleteMenusById(@PathVariable Long id) throws Exception{
+    menuService.deleteTeacherById(id);
   }
 
 }

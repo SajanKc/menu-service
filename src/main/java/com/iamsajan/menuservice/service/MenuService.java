@@ -106,4 +106,18 @@ public class MenuService {
     return null;
   }
 
+  /**
+   * @param id
+   * @author Sajan K.C.
+   * @throws Exception
+   * @since V1.0.0, Modified In: @version, By @author
+   */
+  public void deleteTeacherById(Long id) throws Exception {
+    Optional<Menu> menu = menuRepository.findById(id);
+    if (menu.isPresent())
+      menuRepository.deleteById(id);
+    else
+      throw new Exception("menu with id " + id + " not found");
+  }
+
 }
