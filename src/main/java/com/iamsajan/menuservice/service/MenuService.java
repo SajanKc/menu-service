@@ -62,6 +62,7 @@ public class MenuService {
 
     for (SubMenu subMenu : subMenus) {
       SubMenuDto subMenuDto = new SubMenuDto();
+      subMenuDto.setId(subMenu.getId());
       subMenuDto.setTitle(subMenu.getTitle());
       subMenuDto.setLink(subMenu.getLink());
       subMenuDtoList.add(subMenuDto);
