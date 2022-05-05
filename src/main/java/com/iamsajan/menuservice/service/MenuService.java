@@ -17,6 +17,7 @@ import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import com.iamsajan.menuservice.dto.MenuCreateDto;
 import com.iamsajan.menuservice.dto.MenuResponseDto;
 import com.iamsajan.menuservice.dto.MenuResponseListDto;
@@ -118,6 +119,16 @@ public class MenuService {
       menuRepository.deleteById(id);
     else
       throw new Exception("menu with id " + id + " not found");
+  }
+
+  /**
+   * @param menuIds
+   * @author Sajan K.C.
+   * @since V1.0.0, Modified In: @version, By @author
+   */
+  @Transactional
+  public void deleteMenus(List<Long> menuIds) {
+    menuRepository.deleteByIdIn(menuIds);
   }
 
 }
