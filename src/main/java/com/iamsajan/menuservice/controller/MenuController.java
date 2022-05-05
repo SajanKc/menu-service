@@ -90,4 +90,10 @@ public class MenuController {
     menuService.deleteSubMenus(menuId, subMenuIds);
   }
 
+  @DeleteMapping("/{menuId}/delete-submenus")
+  @ResponseStatus(code = HttpStatus.NO_CONTENT)
+  public void deleteSubMenuByMenuId(@PathVariable Long menuId) {
+    menuService.deleteSubMenus(menuId);
+  }
+
 }

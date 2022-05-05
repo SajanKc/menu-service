@@ -188,4 +188,14 @@ public class MenuService {
     subMenuRepository.deleteByIdInAndMenuId(subMenuIds, menuId);
   }
 
+  /**
+   * @param menuId
+   * @author Sajan K.C.
+   * @since V1.0.0, Modified In: @version, By @author
+   */
+  @Transactional
+  public void deleteSubMenus(Long menuId) {
+    subMenuRepository.deleteByMenuId(menuId);
+  }
+
 }
