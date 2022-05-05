@@ -177,4 +177,15 @@ public class MenuService {
     return null;
   }
 
+  /**
+   * @param menuId
+   * @param subMenuIds
+   * @author Sajan K.C.
+   * @since V1.0.0, Modified In: @version, By @author
+   */
+  @Transactional
+  public void deleteSubMenus(Long menuId, List<Long> subMenuIds) {
+    subMenuRepository.deleteByIdInAndMenuId(subMenuIds, menuId);
+  }
+
 }

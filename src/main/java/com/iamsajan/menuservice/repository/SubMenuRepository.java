@@ -31,4 +31,12 @@ public interface SubMenuRepository extends JpaRepository<SubMenu, Long> {
    */
   List<SubMenu> findByMenuId(Long id);
 
+  /**
+   * @param menuId
+   * @param subMenuIds
+   * @author Sajan K.C.
+   * @since V1.0.0, Modified In: @version, By @author
+   */
+  void deleteByIdInAndMenuId(List<Long> subMenuIds, Long menuId);
+
 }
