@@ -14,11 +14,13 @@ package com.iamsajan.menuservice.service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.iamsajan.menuservice.dto.MenuCreateDto;
 import com.iamsajan.menuservice.dto.MenuResponseDto;
 import com.iamsajan.menuservice.dto.MenuResponseListDto;
+import com.iamsajan.menuservice.dto.MenuUpdateDto;
 import com.iamsajan.menuservice.entity.Menu;
 import com.iamsajan.menuservice.repository.MenuRepository;
 
@@ -82,6 +84,26 @@ public class MenuService {
 
     Menu savedMenu = menuRepository.save(menu);
     return getMenuResponseDto(savedMenu);
+  }
+
+  /**
+   * @param id
+   * @param menuUpdateDto
+   * @return MenuResponseDto
+   * @author Sajan K.C.
+   * @since V1.0.0, Modified In: @version, By @author
+   */
+  public MenuResponseDto updateMenu(Long id, MenuUpdateDto menuUpdateDto) {
+    Optional<Menu> optionalMenu = menuRepository.findById(id);
+    if (optionalMenu.isPresent()) {
+      Menu menu = optionalMenu.get();
+      menu.setTitle(menuUpdateDto.getTitle());
+      menu.setLink(menuUpdateDto.getLink());
+
+      Menu savedMenu = menuRepository.save(menu);
+      return getMenuResponseDto(savedMenu);
+    }
+    return null;
   }
 
 }

@@ -17,6 +17,8 @@ package com.iamsajan.menuservice.dto;
  * @version V1.0.0
  * @since V1.0.0, May 5, 2022
  */
-public class MenuUpdateDto {
+public class MenuUpdateDto extends MenuCreateDto {
+
+  private static final long serialVersionUID = 1L;
 
 }
