@@ -16,6 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import com.iamsajan.menuservice.dto.MenuCreateDto;
 import com.iamsajan.menuservice.dto.MenuResponseDto;
 import com.iamsajan.menuservice.dto.MenuResponseListDto;
 import com.iamsajan.menuservice.entity.Menu;
@@ -68,6 +69,19 @@ public class MenuService {
     return response;
   }
 
+  /**
+   * @param menu
+   * @return MenuResponseDto
+   * @author Sajan K.C.
+   * @since V1.0.0, Modified In: @version, By @author
+   */
+  public MenuResponseDto addNewMenu(MenuCreateDto menuCreateDto) {
+    Menu menu = new Menu();
+    menu.setTitle(menuCreateDto.getTitle());
+    menu.setLink(menuCreateDto.getLink());
 
+    Menu savedMenu = menuRepository.save(menu);
+    return getMenuResponseDto(savedMenu);
+  }
 
 }
