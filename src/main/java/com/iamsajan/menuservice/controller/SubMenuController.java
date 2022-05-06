@@ -16,7 +16,6 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -24,54 +23,49 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
-import com.iamsajan.menuservice.dto.MenuCreateDto;
 import com.iamsajan.menuservice.dto.MenuResponseDto;
-import com.iamsajan.menuservice.dto.MenuResponseListDto;
-import com.iamsajan.menuservice.dto.MenuUpdateDto;
+import com.iamsajan.menuservice.dto.SubMenuCreateDto;
+import com.iamsajan.menuservice.dto.SubMenuResponseDto;
+import com.iamsajan.menuservice.dto.SubMenuUpdateDto;
 import com.iamsajan.menuservice.service.MenuService;
 
 /**
  * @author Sajan K.C.
- * @version
- * @since V1.0.0, May 5, 2022
+ * @version V1.0.0
+ * @since V1.0.0, May 6, 2022
  */
 
 @RestController
-@RequestMapping("/api/v1/menus")
-public class MenuController {
+@RequestMapping("/api/v1")
+public class SubMenuController {
 
   @Autowired
   private MenuService menuService;
 
-  @PostMapping
+  @PostMapping("/menus/{id}/sub-menus")
   @ResponseStatus(code = HttpStatus.CREATED)
-  public MenuResponseDto addMenus(@RequestBody MenuCreateDto menuCreateDto) {
-    return menuService.addNewMenu(menuCreateDto);
+  public MenuResponseDto addSubMenus(@PathVariable Long id,
+      @RequestBody SubMenuCreateDto subMenuCreateDto) {
+    return menuService.addSubMenus(id, subMenuCreateDto);
   }
 
-  @GetMapping
+  @PutMapping("/sub-menus/{id}")
   @ResponseStatus(code = HttpStatus.OK)
-  public MenuResponseListDto getMenu() {
-    return menuService.getMenus();
+  public SubMenuResponseDto upDateSubMenus(@PathVariable Long id,
+      @RequestBody SubMenuUpdateDto subMenuUpdateDto) {
+    return menuService.updateSubMenu(id, subMenuUpdateDto);
   }
 
-  @PutMapping("/{id}")
-  @ResponseStatus(code = HttpStatus.OK)
-  public MenuResponseDto updateMenus(@PathVariable Long id,
-      @RequestBody MenuUpdateDto menuUpdateDto) {
-    return menuService.updateMenu(id, menuUpdateDto);
-  }
-
-  @DeleteMapping("/{id}")
+  @DeleteMapping("menus/{menuId}/sub-menus")
   @ResponseStatus(code = HttpStatus.NO_CONTENT)
-  public void deleteMenusById(@PathVariable Long id) throws Exception {
-    menuService.deleteMenuById(id);
+  public void deleteSubMenus(@PathVariable Long menuId, @RequestBody List<Long> subMenuIds) {
+    menuService.deleteSubMenus(menuId, subMenuIds);
   }
 
-  @DeleteMapping
+  @DeleteMapping("menus/{menuId}/delete-submenus")
   @ResponseStatus(code = HttpStatus.NO_CONTENT)
-  public void deleteMenus(@RequestBody List<Long> menuIds) {
-    menuService.deleteMenus(menuIds);
+  public void deleteSubMenuByMenuId(@PathVariable Long menuId) {
+    menuService.deleteSubMenus(menuId);
   }
 
 }

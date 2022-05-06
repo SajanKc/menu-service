@@ -24,6 +24,8 @@ import com.iamsajan.menuservice.dto.MenuResponseListDto;
 import com.iamsajan.menuservice.dto.MenuUpdateDto;
 import com.iamsajan.menuservice.dto.SubMenuCreateDto;
 import com.iamsajan.menuservice.dto.SubMenuDto;
+import com.iamsajan.menuservice.dto.SubMenuResponseDto;
+import com.iamsajan.menuservice.dto.SubMenuUpdateDto;
 import com.iamsajan.menuservice.entity.Menu;
 import com.iamsajan.menuservice.entity.SubMenu;
 import com.iamsajan.menuservice.repository.MenuRepository;
@@ -133,7 +135,7 @@ public class MenuService {
    * @throws Exception
    * @since V1.0.0, Modified In: @version, By @author
    */
-  public void deleteTeacherById(Long id) throws Exception {
+  public void deleteMenuById(Long id) throws Exception {
     Optional<Menu> menu = menuRepository.findById(id);
     if (menu.isPresent())
       menuRepository.deleteById(id);
@@ -149,6 +151,24 @@ public class MenuService {
   @Transactional
   public void deleteMenus(List<Long> menuIds) {
     menuRepository.deleteByIdIn(menuIds);
+  }
+
+  // SubMenu Services
+
+  /**
+   * @param savedSubMenu
+   * @return SubMenuResponseDto
+   * @author Sajan K.C.
+   * @since V1.0.0, Modified In: @version, By @author
+   */
+  private SubMenuResponseDto getSubMenuResponseDto(SubMenu savedSubMenu) {
+    SubMenuResponseDto response = new SubMenuResponseDto();
+
+    response.setId(savedSubMenu.getId());
+    response.setTitle(savedSubMenu.getTitle());
+    response.setLink(savedSubMenu.getLink());
+
+    return response;
   }
 
   /**
@@ -196,6 +216,27 @@ public class MenuService {
   @Transactional
   public void deleteSubMenus(Long menuId) {
     subMenuRepository.deleteByMenuId(menuId);
+  }
+
+  /**
+   * @param id
+   * @param subMenuUpdateDto
+   * @return MenuResponseDto
+   * @author Sajan K.C.
+   * @since V1.0.0, Modified In: @version, By @author
+   */
+  public SubMenuResponseDto updateSubMenu(Long id, SubMenuUpdateDto subMenuUpdateDto) {
+    Optional<SubMenu> optionalSubMenu = subMenuRepository.findById(id);
+    
+    if (optionalSubMenu.isPresent()) {
+      SubMenu subMenu = optionalSubMenu.get();
+      subMenu.setTitle(subMenuUpdateDto.getTitle());
+      subMenu.setLink(subMenuUpdateDto.getLink());
+
+      SubMenu savedSubMenu = subMenuRepository.save(subMenu);
+      return getSubMenuResponseDto(savedSubMenu);
+    }
+    return null;
   }
 
 }
