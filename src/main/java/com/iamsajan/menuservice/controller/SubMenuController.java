@@ -16,6 +16,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -49,9 +50,15 @@ public class SubMenuController {
     return menuService.addSubMenus(id, subMenuCreateDto);
   }
 
+  @GetMapping("/sub-menus/{id}")
+  @ResponseStatus(code = HttpStatus.OK)
+  public SubMenuResponseDto getSubMenusById(@PathVariable Long id) {
+    return menuService.getSubMenuById(id);
+  }
+
   @PutMapping("/sub-menus/{id}")
   @ResponseStatus(code = HttpStatus.OK)
-  public SubMenuResponseDto upDateSubMenus(@PathVariable Long id,
+  public SubMenuResponseDto updateSubMenus(@PathVariable Long id,
       @RequestBody SubMenuUpdateDto subMenuUpdateDto) {
     return menuService.updateSubMenu(id, subMenuUpdateDto);
   }

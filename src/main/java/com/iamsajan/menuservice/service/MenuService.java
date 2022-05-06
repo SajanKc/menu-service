@@ -227,7 +227,7 @@ public class MenuService {
    */
   public SubMenuResponseDto updateSubMenu(Long id, SubMenuUpdateDto subMenuUpdateDto) {
     Optional<SubMenu> optionalSubMenu = subMenuRepository.findById(id);
-    
+
     if (optionalSubMenu.isPresent()) {
       SubMenu subMenu = optionalSubMenu.get();
       subMenu.setTitle(subMenuUpdateDto.getTitle());
@@ -235,6 +235,21 @@ public class MenuService {
 
       SubMenu savedSubMenu = subMenuRepository.save(subMenu);
       return getSubMenuResponseDto(savedSubMenu);
+    }
+    return null;
+  }
+
+  /**
+   * @param id
+   * @return SubMenuResponseDto
+   * @author Sajan K.C.
+   * @since V1.0.0, Modified In: @version, By @author
+   */
+  public SubMenuResponseDto getSubMenuById(Long id) {
+    Optional<SubMenu> optionalSubMenu = subMenuRepository.findById(id);
+    if (optionalSubMenu.isPresent()) {
+      SubMenu subMenu = optionalSubMenu.get();
+      return getSubMenuResponseDto(subMenu);
     }
     return null;
   }
